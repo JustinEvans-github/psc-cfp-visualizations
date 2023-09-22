@@ -29,6 +29,7 @@ def fig_y_max(fig):
     
     return max(counts)
 
+<<<<<<< HEAD
 def tts_figure(df):
 
     # starting dataset year
@@ -48,6 +49,28 @@ def tts_figure(df):
     fig.add_trace(go.Histogram(x=df['Time to staff'], nbinsx=50, marker_color='#336b95',showlegend=False),
                             row=1, col=1
                             )
+=======
+def tts_histogram(df):
+
+    fig = go.Figure()
+    fig.add_trace(go.Histogram(x=df['Time to staff'], nbinsx=50, marker_color='#336b95',showlegend=False))
+
+    # Selectable Dropdown
+    # https://stackoverflow.com/questions/71622776/plotly-update-button-to-filter-dataset
+    fig.update_layout(
+        updatemenus=[
+            {"buttons": [
+                    {
+                        "label": c,
+                        "method": "update",
+                        "args": [{"y": [df.loc[df['Period'] == c, 'Time to staff']]}],
+                    }
+                    for c in df["Period"].unique().tolist()
+                ]
+                
+            }])
+
+>>>>>>> 3050ca047880f7ec3549647ae21ce693ab7bbfde
     # Custom Y-axis
     y_max = fig_y_max(fig)+1
     fig.update_layout(yaxis_range=[0,y_max])
@@ -72,6 +95,7 @@ def tts_figure(df):
     x_middle = max(df['Time to staff'])/2
     text_median = f"--- Median ({x_median} days)"
 
+<<<<<<< HEAD
     fig.add_trace(go.Scatter(
         x=[x_middle],
         y=[y_max],
@@ -120,5 +144,21 @@ def tts_figure(df):
 
     fig.update_layout(
         height=800)
+=======
+    # fig.add_trace(go.Scatter(
+    #     x=[x_middle],
+    #     y=[y_max],
+    #     mode="lines+text",
+    #     name="Lines and Text",
+    #     text=[text_median],
+    #     textposition="bottom center",
+    #     showlegend=False
+    # ))
+
+    fig.add_annotation(x=x_middle, y=y_max,
+            text=text_median,
+            showarrow=False,
+            arrowhead=1)
+>>>>>>> 3050ca047880f7ec3549647ae21ce693ab7bbfde
 
     return fig
