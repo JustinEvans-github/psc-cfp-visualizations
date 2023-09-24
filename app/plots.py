@@ -29,7 +29,6 @@ def fig_y_max(fig):
     
     return max(counts)
 
-<<<<<<< HEAD
 def tts_figure(df):
 
     # starting dataset year
@@ -49,28 +48,6 @@ def tts_figure(df):
     fig.add_trace(go.Histogram(x=df['Time to staff'], nbinsx=50, marker_color='#336b95',showlegend=False),
                             row=1, col=1
                             )
-=======
-def tts_histogram(df):
-
-    fig = go.Figure()
-    fig.add_trace(go.Histogram(x=df['Time to staff'], nbinsx=50, marker_color='#336b95',showlegend=False))
-
-    # Selectable Dropdown
-    # https://stackoverflow.com/questions/71622776/plotly-update-button-to-filter-dataset
-    fig.update_layout(
-        updatemenus=[
-            {"buttons": [
-                    {
-                        "label": c,
-                        "method": "update",
-                        "args": [{"y": [df.loc[df['Period'] == c, 'Time to staff']]}],
-                    }
-                    for c in df["Period"].unique().tolist()
-                ]
-                
-            }])
-
->>>>>>> 3050ca047880f7ec3549647ae21ce693ab7bbfde
     # Custom Y-axis
     y_max = fig_y_max(fig)+1
     fig.update_layout(yaxis_range=[0,y_max])
@@ -95,7 +72,6 @@ def tts_histogram(df):
     x_middle = max(df['Time to staff'])/2
     text_median = f"--- Median ({x_median} days)"
 
-<<<<<<< HEAD
     fig.add_trace(go.Scatter(
         x=[x_middle],
         y=[y_max],
@@ -128,37 +104,50 @@ def tts_histogram(df):
     # https://stackoverflow.com/questions/71622776/plotly-update-button-to-filter-dataset
     fig.update_layout(
         updatemenus=[
-            {"buttons": [
+            # Internal/External Menu
+            {
+            # specify position of menu
+            "x":-0.2,"y":0.98,
+            # specify values to update
+                "buttons": [
                     {
                         "label": c,
                         "method": "update",
                         "args": [{
                             # histogram
-                            "y": [df_all.loc[df_all['Period'] == c, 'Time to staff']], 
+                            "y": [df.loc[df['Type'] == c, 'Time to staff']], 
                             # table       
-                            "cells": {"values": df_all_table.loc[df_all['Period'] == c].T.values}}],
+                            "cells": {"values": df_table.loc[df['Type'] == c].T.values}}],
+                    }
+                    for c in ['Internal','External'] # reversed order list
+                ]  
+            },
+            
+            # Year Menu
+            {"x":-0.2,"y":0.87,
+                "buttons": [
+                    {
+                        "label": c,
+                        "method": "update",
+                        "args": [{
+                            "y": [df.loc[df['Period'] == c, 'Time to staff']],       
+                            "cells": {"values": df_table.loc[df['Period'] == c].T.values}}],
                     }
                     for c in df["Period"].unique()[::-1].tolist()
-                ]
-            }])
+                ]  
+            }
+            
+            ])
+
+    # dropdown text
+    fig.add_annotation(x=-0.37, y=y_max, xref='paper', showarrow=False,
+                text="<b>Type of hiring:<b>")
+
+    fig.add_annotation(x=-0.37, y=y_max-5, xref='paper', showarrow=False,
+                text="<b>Time period:<b>")
 
     fig.update_layout(
+        margin=dict(l=50,t=50),
         height=800)
-=======
-    # fig.add_trace(go.Scatter(
-    #     x=[x_middle],
-    #     y=[y_max],
-    #     mode="lines+text",
-    #     name="Lines and Text",
-    #     text=[text_median],
-    #     textposition="bottom center",
-    #     showlegend=False
-    # ))
-
-    fig.add_annotation(x=x_middle, y=y_max,
-            text=text_median,
-            showarrow=False,
-            arrowhead=1)
->>>>>>> 3050ca047880f7ec3549647ae21ce693ab7bbfde
 
     return fig
