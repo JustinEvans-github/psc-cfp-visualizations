@@ -3,23 +3,32 @@
 {% block head %}
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
 {% endblock %}
 
 {% block body %}
-
-<!-- Offline method -->
-<div>
-  {{graphJSON|safe}}
+<div class="container">
+  <div id="panel">
+    <header class="panel-heading">
+      <h3 class="panel-title">
+        Time to staff - {{metrics.department}}
+      </h3>
+    </header>
+    <div class="panel-body">
+      <div class="summaryArea">
+        <p>
+          In summary, there were {{metrics.internal_hirings}} internal hirings in {{metrics.period}}. 
+          The minimum time to staff was {{metrics.tts_minimum}} days and the maximum time to staff was {{metrics.tts_maximum}} days. 
+          The average time to staff was {{metrics.tts_average}} days and the median time to staff was {{metrics.tts_median}} days.
+        </p>
+      </div>
+      <div class="chartArea">
+        {{graphJSON|safe}}
+      </div>
+    </div>  
+  </div>
 </div>
-
-<!-- Official method 
-<div id="chart" class="chart">
-</div>
-<script type='text/javascript'>
-  var graphs = '{{graphJSON|tojson|safe}}';
-  Plotly.plot('chart',graphs,{});
-</script> 
--->
-
 
 {% endblock %}
