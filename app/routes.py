@@ -4,16 +4,20 @@ import pandas as pd
 
 from app.plots import *
 
-
 @app.route('/',methods=['GET','POST'])
 def index():
-<<<<<<< HEAD
+
+    # data
     df = pd.read_csv(r'app\data\tts_data.csv')
-    fig = tts_figure(df)
-=======
-    df = pd.read_csv(r'app\data\tts_download.csv')
-    fig = tts_histogram(df)
->>>>>>> 3050ca047880f7ec3549647ae21ce693ab7bbfde
+    fig, metrics = tts_figure(df)
     graphJSON = JSON_plot(fig)
 
-    return render_template('index.html', graphJSON=graphJSON)
+    # quicker graph for debugging
+    # from plotly.subplots import make_subplots
+    # fig = make_subplots(rows=2, cols=1,
+    #                 vertical_spacing=0.15,
+    #                 specs=[[{"type": "histogram"}],
+    #                         [{"type": "table"}]])
+    # graphJSON = JSON_plot(fig)
+
+    return render_template('index.html',graphJSON=graphJSON, metrics=metrics)

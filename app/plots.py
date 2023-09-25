@@ -31,10 +31,20 @@ def fig_y_max(fig):
 
 def tts_figure(df):
 
-    # starting dataset year
+    # Dataset: most recent year
     df_all = df
     period = df["Period"].unique()[::-1].tolist()[0] # most recent year
     df = df_all.loc[df_all['Period'] == period]
+
+    # Generate Metrics
+    metrics = {'internal_hirings':df.shape[0],
+               'department':df['Department/agency'].iloc[0],
+                'period': df.Period.iloc[0],
+                'tts_minimum': min(df['Time to staff']),
+                'tts_maximum': max(df['Time to staff']),
+                'tts_average': int(statistics.mean(df['Time to staff'])),
+                'tts_median': int(statistics.median(df['Time to staff']))
+           }
 
     ## Histogram
 
@@ -115,9 +125,9 @@ def tts_figure(df):
                         "method": "update",
                         "args": [{
                             # histogram
-                            "y": [df.loc[df['Type'] == c, 'Time to staff']], 
+                            "y": [df_all.loc[df_all['Type'] == c, 'Time to staff']], 
                             # table       
-                            "cells": {"values": df_table.loc[df['Type'] == c].T.values}}],
+                            "cells": {"values": df_all_table.loc[df_all['Type'] == c].T.values}}],
                     }
                     for c in ['Internal','External'] # reversed order list
                 ]  
@@ -130,10 +140,10 @@ def tts_figure(df):
                         "label": c,
                         "method": "update",
                         "args": [{
-                            "y": [df.loc[df['Period'] == c, 'Time to staff']],       
-                            "cells": {"values": df_table.loc[df['Period'] == c].T.values}}],
+                            "y": [df_all.loc[df_all['Period'] == c, 'Time to staff']],       
+                            "cells": {"values": df_all_table.loc[df_all['Period'] == c].T.values}}],
                     }
-                    for c in df["Period"].unique()[::-1].tolist()
+                    for c in df_all["Period"].unique()[::-1].tolist()
                 ]  
             }
             
@@ -143,11 +153,11 @@ def tts_figure(df):
     fig.add_annotation(x=-0.37, y=y_max, xref='paper', showarrow=False,
                 text="<b>Type of hiring:<b>")
 
-    fig.add_annotation(x=-0.37, y=y_max-5, xref='paper', showarrow=False,
+    fig.add_annotation(x=-0.37, y=y_max-1.5, xref='paper', showarrow=False,
                 text="<b>Time period:<b>")
 
     fig.update_layout(
         margin=dict(l=50,t=50),
         height=800)
 
-    return fig
+    return fig, metrics
