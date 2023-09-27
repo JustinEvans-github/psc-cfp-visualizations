@@ -19,7 +19,7 @@ pip install -r requirements.txt
 
 Attribute | PSC |  Repository
 :-------------------------:|:-------------------------:|:-------------------------:
-Figure | <img src="docs\psc-javascript-figure.PNG" alt="drawing" width="400"/> | <img src="docs\psc-plotly-figure.PNG" alt="drawing" width="400"/>
+Figure | <img src="docs\psc-javascript-figure.PNG" alt="drawing" width="400"/> | <img src="docs\psc-plotly-figure.PNG" alt="drawing" width="290"/>
 Language | Javascript | Python
 Libary | D3 | Plotly
 Lines of Code | <1600 | <200
