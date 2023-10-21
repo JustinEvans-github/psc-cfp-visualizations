@@ -1,6 +1,6 @@
 # psc-cfp-visualizations
 
-Recreating the Public Service Commission of Canada (PSC)'s Time to Staff (TTS)D3.js graphic in Plotly. To access PSC's Time to Staff (TTS) [data](/https://www5.psc-cfp.gc.ca/dsad-dsda/time-to-staff/index-en.html) go to 'Select a department or an agency' and download each 'Time Period'.
+Recreating the Public Service Commission of Canada (PSC)'s Time to Staff (TTS) D3.js graphic in Plotly. To access PSC's Time to Staff (TTS) [data](/https://www5.psc-cfp.gc.ca/dsad-dsda/time-to-staff/index-en.html) go to 'Select a department or an agency' and download each 'Time Period'.
 
 ### Components
 - Website framework in [Flask](/https://flask.palletsprojects.com/en/2.3.x/) using HTML and CSS 
